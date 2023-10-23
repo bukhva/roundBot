@@ -3,8 +3,10 @@ import ffmpeg
 
 def video_to_video_note(floc, nfloc):
     probe = ffmpeg.probe(floc)
-    w=probe["streams"][0]['width']
-    h=probe["streams"][0]['height']
+    for stream in probe["streams"]:
+        if stream["codec_type"]=="video":
+            w = probe["streams"][0]['width']
+            h = probe["streams"][0]['height']
     s = min(w,h)
     if w>h:
         x=(w-h)//2
